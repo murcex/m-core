@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>1.0.0</Version>
+    <PackageId>Murcex.Vyudro.Client</PackageId>
+    <Description>Vyudro Web Client</Description>
+    <Title>Murcex Vyudro Client</Title>
+    <Company>Murcex</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
+    <PackageReference Include="Murcex.KirokuG2" Version="1.0.0" />
+    <PackageReference Include="Murcex.PlyQor.Client" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Murcex.Vyudro.Internal.Utilities\Murcex.Vyudro.Internal.Utilities.csproj" />
+  </ItemGroup>
+
+</Project>
