@@ -34,7 +34,8 @@ namespace KirokuG2.Internal.Loader.Components
 						logs["1"] = rawLogAsLines;
 
 						return logs;
-					};
+					}
+					;
 				}
 				else
 				{

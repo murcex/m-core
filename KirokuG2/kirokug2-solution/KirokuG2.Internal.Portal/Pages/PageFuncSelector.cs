@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Murcex.Implements.DataTools.Extensions;
+using Murcex.Vyudro.Module.Client.Models;
 
-namespace KirokuG2.Internal.Portal
+namespace KirokuG2.Internal.Portal.Pages
 {
 	public class PageFuncSelector
 	{

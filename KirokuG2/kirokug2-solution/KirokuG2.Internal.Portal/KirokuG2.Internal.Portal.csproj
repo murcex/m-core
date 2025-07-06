@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Murcex.Implements.DataTools" Version="0.0.1" />
+    <PackageReference Include="Murcex.Vyudro.Client" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>

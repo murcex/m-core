@@ -23,4 +23,7 @@
     <Folder Include="Resources\Images\" />
     <Folder Include="Resources\Templates\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KirokuG2.Internal.Portal\KirokuG2.Internal.Portal.csproj" />
+  </ItemGroup>
 </Project>
