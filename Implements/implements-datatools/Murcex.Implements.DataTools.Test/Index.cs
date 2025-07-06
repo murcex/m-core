@@ -1,6 +1,6 @@
-﻿using Murcex.Vyudro.Internal.Utilities.Extensions;
+﻿using Murcex.Implements.DataTools.Extensions;
 
-namespace Murcex.Vyudro.Test.Utilities
+namespace Murcex.Implements.DataTools.Test
 {
 	[TestClass]
 	public sealed class Index

@@ -1,6 +1,6 @@
-﻿using Murcex.Vyudro.Internal.Utilities.Extensions;
+﻿using Murcex.Implements.DataTools.Extensions;
 
-namespace Murcex.Vyudro.Internal.Utilities.Extensions
+namespace Murcex.Implements.DataTools.Extensions
 {
 	public static class StringExtension
 	{

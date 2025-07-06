@@ -1,4 +1,4 @@
-﻿namespace Murcex.Vyudro.Internal.Utilities.IO.Internal
+﻿namespace Murcex.Implements.DataTools.IO.Internal
 {
 	public class FileOperator
 	{

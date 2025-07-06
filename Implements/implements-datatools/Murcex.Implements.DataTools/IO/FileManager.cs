@@ -1,6 +1,6 @@
-﻿using Murcex.Vyudro.Internal.Utilities.IO.Internal;
+﻿using Murcex.Implements.DataTools.IO.Internal;
 
-namespace Murcex.Vyudro.Internal.Utilities.IO
+namespace Murcex.Implements.DataTools.IO
 {
 	public static class FileManager
 	{

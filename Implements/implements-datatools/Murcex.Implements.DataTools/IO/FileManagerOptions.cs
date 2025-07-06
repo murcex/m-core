@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Murcex.Vyudro.Internal.Utilities.IO
+namespace Murcex.Implements.DataTools.IO
 {
 	public class FileManagerOptions
 	{

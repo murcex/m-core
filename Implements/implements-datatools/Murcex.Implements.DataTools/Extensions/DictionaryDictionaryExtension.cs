@@ -1,4 +1,4 @@
-﻿namespace Murcex.Vyudro.Internal.Utilities.Extensions
+﻿namespace Murcex.Implements.DataTools.Extensions
 {
 	public static class DictionaryDictionaryExtension
 	{
