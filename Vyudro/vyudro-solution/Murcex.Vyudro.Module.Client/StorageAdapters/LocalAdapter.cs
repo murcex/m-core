@@ -1,4 +1,4 @@
-﻿using Murcex.Vyudro.Internal.Utilities.IO;
+﻿using Murcex.Implements.DataTools.IO;
 using Murcex.Vyudro.Module.Client.Interface;
 
 namespace Murcex.Vyudro.Module.Client.StorageAdapters
