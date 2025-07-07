@@ -17,8 +17,14 @@ namespace KirokuG2.Internal.Portal.Pages
 
 			switch (page)
 			{
-				case "test-signin":
+				case "signin":
 					return new Dictionary<string, string>();
+				case "login":
+					return GetTokenForPage.Execute(pageFuncData);
+				case "query-log":
+					return GetTokenForPage.Execute(pageFuncData);
+				case "view-log":
+					return GetLogFunc.Execute(pageFuncData);
 				default:
 					pageFuncData.KLog.Error($"Page Function not found for {page}");
 					throw new Exception($"Page Function not found for {page}");

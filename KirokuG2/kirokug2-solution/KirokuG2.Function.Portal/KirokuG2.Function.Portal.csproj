@@ -1,6 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -20,8 +20,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Images\" />
-    <Folder Include="Resources\Templates\" />
+    <None Update="Resources\**\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KirokuG2.Internal.Portal\KirokuG2.Internal.Portal.csproj" />

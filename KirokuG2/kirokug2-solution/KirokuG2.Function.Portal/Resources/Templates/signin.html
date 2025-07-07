@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kiroku - Signin</title>
+    <style>
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Courier, monospace;
+            color: #000;
+            margin: 0;
+        }
+
+        .container {
+            padding: 40px 30px;
+        }
+
+        .textbox {
+            height: 40px;
+            font-size: 16px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+            font-family: 'Courier';
+            display: block;
+            margin-bottom: 15px;
+            width: 240px;
+        }
+
+        .button {
+            height: 52px;
+            font-size: 16px;
+            padding: 5px 10px;
+            width: 55px;
+            background-color: white;
+            border: 1px solid black;
+            color: black;
+        }
+
+        .image {
+            display: block;
+            margin-bottom: 20px;
+            width: 64px;
+            height: 64px;
+        }
+    </style>
+    <script>
+        function useTextInURL() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const url = 'WEBSITE_HOSTNAME/api/Portal?page=login&access-user=' +
+                encodeURIComponent(username) + '&access-token=' +
+                encodeURIComponent(password);
+
+            window.location.href = url;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <img src="signin.png" alt="Lock Icon" class="image" />
+        <input type="text" id="username" class="textbox" placeholder="User" autocomplete="off" />
+        <input type="password" id="password" class="textbox" placeholder="Token" autocomplete="off" />
+        <button class="button" onclick="useTextInURL()"> + </button>
+    </div>
+</body>
+
+</html>

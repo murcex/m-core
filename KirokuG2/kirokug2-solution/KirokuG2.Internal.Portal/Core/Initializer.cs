@@ -9,6 +9,8 @@ namespace KirokuG2.Internal.Portal.Core
 		{
 			var siteManager = new VyudroManager();
 
+			Configuration.Load(cfg);
+
 			siteManager.Initialize(cfg, PageFuncSelector.Execute);
 
 			Configuration.AddSiteManager(siteManager);
