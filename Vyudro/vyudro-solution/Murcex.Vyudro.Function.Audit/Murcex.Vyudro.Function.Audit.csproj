@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AzureFunctionsVersion>v4</AzureFunctionsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Function & Custom Dependencies -->
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.6.0" />
+    <PackageReference Include="Murcex.Configurator" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Internal Audit Reference -->
+    <ProjectReference Include="..\Murcex.Vyudro.Internal.Audit\Murcex.Vyudro.Internal.Audit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Always-Copied Config & Resource Files -->
+    <None Update="host.json" CopyToOutputDirectory="Always" />
+    <None Update="example.local.settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="local.settings.json" CopyToOutputDirectory="Always" />
+    <None Update="Resources\**\*.*" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+</Project>

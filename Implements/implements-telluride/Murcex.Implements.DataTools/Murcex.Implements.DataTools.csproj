@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>0.0.1</Version>
+    <PackageId>Murcex.Implements.DataTools</PackageId>
+    <Description>Implements Data Tools</Description>
+    <Title>Murcex Implements Data Tools</Title>
+  </PropertyGroup>
+
+</Project>

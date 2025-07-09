@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.36105.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.Vyudro.Module.Client", "Murcex.Vyudro.Module.Client\Murcex.Vyudro.Module.Client.csproj", "{3CE44AE7-290B-447E-87D0-0C4D328D6225}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.Vyudro.Internal.Audit", "Murcex.Vyudro.Internal.Audit\Murcex.Vyudro.Internal.Audit.csproj", "{0AF34443-DD49-4823-B2C7-821772D6F3E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.Vyudro.Function.Audit", "Murcex.Vyudro.Function.Audit\Murcex.Vyudro.Function.Audit.csproj", "{436176CC-14A3-4C9C-AE2C-10BB5A7F950F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.Vyudro.Test.Client", "Murcex.Vyudro.Test.Client\Murcex.Vyudro.Test.Client.csproj", "{A88260FF-EC79-4653-8AB3-861BD870D40B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CE44AE7-290B-447E-87D0-0C4D328D6225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CE44AE7-290B-447E-87D0-0C4D328D6225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CE44AE7-290B-447E-87D0-0C4D328D6225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CE44AE7-290B-447E-87D0-0C4D328D6225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AF34443-DD49-4823-B2C7-821772D6F3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AF34443-DD49-4823-B2C7-821772D6F3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AF34443-DD49-4823-B2C7-821772D6F3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AF34443-DD49-4823-B2C7-821772D6F3E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{436176CC-14A3-4C9C-AE2C-10BB5A7F950F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{436176CC-14A3-4C9C-AE2C-10BB5A7F950F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{436176CC-14A3-4C9C-AE2C-10BB5A7F950F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{436176CC-14A3-4C9C-AE2C-10BB5A7F950F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A88260FF-EC79-4653-8AB3-861BD870D40B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A88260FF-EC79-4653-8AB3-861BD870D40B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A88260FF-EC79-4653-8AB3-861BD870D40B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A88260FF-EC79-4653-8AB3-861BD870D40B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC00CD3F-198B-4F09-92AF-998FEAB47E3C}
+	EndGlobalSection
+EndGlobal

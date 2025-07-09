@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier';
+        }
+
+        body {
+            background-image: url('background.jpg');
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the background */
+            background-repeat: no-repeat; /* Prevent background repeat */
+            background-attachment: fixed; /* Keep background fixed when scrolling (optional) */
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px; /* Add spacing between elements */
+        }
+
+        .textbox {
+            height: 40px;
+            font-size: 16px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+            font-family: 'Courier';
+        }
+
+        .button {
+            height: 52px;
+            font-size: 16px;
+            padding: 5px 10px;
+            width: 55px;
+            background-color: white;
+            border: 1px solid black;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <button class="button" onclick="redirect()"> + </button>
+        <input type="password" class="textbox" id="passwordInputBox" placeholder="">
+    </div>
+
+    <script>
+        function redirect() {
+            var password = document.getElementById('passwordInputBox').value;
+            var url = 'WEBSITE_HOSTNAME/api/Portal?page=test-login&access-user=default&access-token=' + password;
+            window.location.href = url;
+        }
+    </script>
+</body>
+
+</html>
