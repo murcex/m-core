@@ -8,55 +8,40 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Testing Packages -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="MSTest" Version="3.6.4" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Unit Testing Namespace -->
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Include Test-Related Folders -->
     <Folder Include="Resources\Pages\" />
     <Folder Include="Resources\Session\" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Dependency Project -->
     <ProjectReference Include="..\Murcex.Vyudro.Module.Client\Murcex.Vyudro.Module.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Core\Config.ini">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Core\ExampleConfig.ini">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Pages\error-access.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Pages\error-exception.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Pages\error-invalid-parameter.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Pages\error-not-found.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Pages\kaboom.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Pages\test.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Pages\test2.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Session\manifest.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <!-- Static Resource Files -->
+    <None Update="Core\Config.ini" CopyToOutputDirectory="Always" />
+    <None Update="Core\ExampleConfig.ini" CopyToOutputDirectory="Always" />
+    <None Update="Resources\Session\manifest.txt" CopyToOutputDirectory="Always" />
+    <None Update="Resources\Pages\error-access.html" CopyToOutputDirectory="Always" />
+    <None Update="Resources\Pages\error-exception.html" CopyToOutputDirectory="Always" />
+    <None Update="Resources\Pages\error-invalid-parameter.html" CopyToOutputDirectory="Always" />
+    <None Update="Resources\Pages\error-not-found.html" CopyToOutputDirectory="Always" />
+    <None Update="Resources\Pages\kaboom.html" CopyToOutputDirectory="Always" />
+    <None Update="Resources\Pages\test.html" CopyToOutputDirectory="Always" />
+    <None Update="Resources\Pages\test2.html" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
 </Project>
