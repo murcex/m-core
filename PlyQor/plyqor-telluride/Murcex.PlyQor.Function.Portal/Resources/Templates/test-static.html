@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vyudro Portal - Static Element</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: courier;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2em;
+            border: 1px solid black;
+            text-align: center;
+            color: black;
+        }
+
+        button {
+            padding: 0.6em 1.2em;
+            font-size: 1em;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function openURL() {
+            var url = 'WEBSITE_HOSTNAME/api/Portal?page=test-index&session-token=dym-token';
+            window.location.href = url;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h2 style="text-align: center;">Static Element</h2>
+        <p style="text-align: left;">
+            This element is statically defined in an HTML template and populated from a configuration file.<br>
+            It does not change across requests and provides consistent, reusable content.<br>
+        </p>
+        <p style="text-align: left;">
+            Here is an example of a static element: stc-test-value<br>
+        </p>
+        <br>
+        <a href="WEBSITE_HOSTNAME/api/Portal?page=test-index&session-token=dym-token">
+            <img src="home.png" alt="Home" width="32" height="32" style="cursor: pointer; border: none;">
+        </a>
+    </div>
+
+</body>
+
+</html>

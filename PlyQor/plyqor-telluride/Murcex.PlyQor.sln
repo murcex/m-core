@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.36105.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.PlyQor.Internal.Container", "Murcex.PlyQor.Internal.Container\Murcex.PlyQor.Internal.Container.csproj", "{3A5108F0-BEAD-4DC9-9181-43F900772EDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.PlyQor.Internal.Retention", "Murcex.PlyQor.Internal.Retention\Murcex.PlyQor.Internal.Retention.csproj", "{9D4C9844-CDC5-48D4-82EE-9B4010E8BF22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.PlyQor.Internal.Query", "Murcex.PlyQor.Internal.Query\Murcex.PlyQor.Internal.Query.csproj", "{63C71792-7D05-4BF6-863A-0058F00ADC3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.PlyQor.Function.Portal", "Murcex.PlyQor.Function.Portal\Murcex.PlyQor.Function.Portal.csproj", "{0BBC74FD-72B4-4BEB-BF15-9142ACA0B115}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.PlyQor.Internal.Portal", "Murcex.PlyQor.Internal.Portal\Murcex.PlyQor.Internal.Portal.csproj", "{BB2C42D9-8DCC-4A42-8197-7604F344599D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A5108F0-BEAD-4DC9-9181-43F900772EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A5108F0-BEAD-4DC9-9181-43F900772EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A5108F0-BEAD-4DC9-9181-43F900772EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A5108F0-BEAD-4DC9-9181-43F900772EDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D4C9844-CDC5-48D4-82EE-9B4010E8BF22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D4C9844-CDC5-48D4-82EE-9B4010E8BF22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D4C9844-CDC5-48D4-82EE-9B4010E8BF22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D4C9844-CDC5-48D4-82EE-9B4010E8BF22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63C71792-7D05-4BF6-863A-0058F00ADC3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C71792-7D05-4BF6-863A-0058F00ADC3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C71792-7D05-4BF6-863A-0058F00ADC3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C71792-7D05-4BF6-863A-0058F00ADC3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBC74FD-72B4-4BEB-BF15-9142ACA0B115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBC74FD-72B4-4BEB-BF15-9142ACA0B115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBC74FD-72B4-4BEB-BF15-9142ACA0B115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBC74FD-72B4-4BEB-BF15-9142ACA0B115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB2C42D9-8DCC-4A42-8197-7604F344599D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB2C42D9-8DCC-4A42-8197-7604F344599D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB2C42D9-8DCC-4A42-8197-7604F344599D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB2C42D9-8DCC-4A42-8197-7604F344599D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D020ADD-848B-4CC7-8F59-CD95A4C775E2}
+	EndGlobalSection
+EndGlobal
