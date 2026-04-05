@@ -16,7 +16,7 @@ namespace Murcex.PlyQor.Function.Portal.Functions
 			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
 		ILogger log)
 		{
-			using (var klog = KManager.NewInstance("Test-Portal"))
+			using (var klog = KManager.NewInstance("PlyQor-Portal"))
 			{
 				try
 				{

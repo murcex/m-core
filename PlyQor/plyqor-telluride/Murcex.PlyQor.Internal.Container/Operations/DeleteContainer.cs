@@ -1,18 +1,32 @@
 ﻿using Murcex.PlyQor.Internal.Container.Model;
+using Murcex.PlyQor.Internal.Container.Storage;
 
 namespace Murcex.PlyQor.Internal.Container.Operations
 {
 	public class DeleteContainer
 	{
-		public static void Execute(PlyQorContainer container)
+		public static bool Execute(PlyQorContainer container)
 		{
-			throw new NotImplementedException();
+			// download containers
+			var existingContainers = DownloadContainers.Execute();
 
-			// get container
+			// find and remove container
+			var containerToRemove = existingContainers.FirstOrDefault(c => c.Name.Equals(container.Name, StringComparison.OrdinalIgnoreCase));
+			if (containerToRemove is not null)
+			{
+				existingContainers.Remove(containerToRemove);
+			}
+			else
+			{
+				return false; // container not found
+			}
 
-			// remove single continer
+			// upload updated containers
+			var uploadContainers = new UploadContainers();
 
-			// update continer
+			uploadContainers.Execute(existingContainers);
+
+			return true;
 		}
 	}
 }

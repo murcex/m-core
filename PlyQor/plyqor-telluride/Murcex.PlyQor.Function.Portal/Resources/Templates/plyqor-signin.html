@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PlyQor - Signin</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Courier', monospace;
+      background: url('background.jpg') center center / cover no-repeat fixed;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container-row {
+      margin-bottom: 20px;
+    }
+
+    .container-image {
+      width: 64px;
+      height: 64px;
+      cursor: pointer;
+    }
+
+    .textbox-wrapper {
+      width: 700px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+
+    input[class="textbox"] {
+      height: 40px;
+      width: 100%;
+      font-size: 16px;
+      padding: 5px;
+      text-align: center;
+      border: 1px solid black;
+      font-family: 'Courier', monospace;
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="container-row">
+      <img src="signin.png" alt="Sign In" class="container-image" title="Sign In" id="signin-img">
+    </div>
+
+    <div class="textbox-wrapper">
+      <input type="text" id="box1" class=textbox placeholder="user" autocomplete="off">
+      <input type="password" id="box2" class=textbox placeholder="token" autocomplete="off">
+    </div>
+  </div>
+  <script>
+    document.getElementById('signin-img').addEventListener('click', function() {
+      const user = encodeURIComponent(document.getElementById('box1').value);
+      const token = encodeURIComponent(document.getElementById('box2').value);
+      const url = `WEBSITE_HOSTNAME/api/Portal?page=plyqor-login&access-user=${user}&access-token=${token}`;
+      window.location.href = url;
+    });
+  </script>
+</body>
+</html>

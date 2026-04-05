@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PlyQor - View Container</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Courier', monospace;
+            background: url('background.jpg') center center / cover no-repeat fixed;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .top-left-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+
+        .index-image {
+            width: 64px;
+            height: 64px;
+            cursor: pointer;
+        }
+
+        .upload-row {
+            margin-bottom: 20px;
+        }
+
+        .upload-image {
+            width: 64px;
+            height: 64px;
+            cursor: pointer;
+        }
+
+        .main-container {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .textbox-wrapper {
+            width: 700px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            height: 40px;
+            width: 100%;
+            font-size: 16px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+            font-family: 'Courier', monospace;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-left-icon">
+        <a href="WEBSITE_HOSTNAME/api/Portal?page=query-list&session-token=dym-token&container=dym-container">
+            <img src="index.png" alt="Home" class="index-image" title="Home">
+        </a>
+    </div>
+
+    <div class="main-container">
+        <div class="upload-row">
+            <img src="upload.png" alt="Upload" class="upload-image" title="Upload" id="upload-img">
+        </div>
+
+        <div class="textbox-wrapper">
+            <input type="text" id="box1" value="dym-container" readonly>
+            <input type="text" id="box2" placeholder="plyqor tag" autocomplete="off">
+            <input type="text" id="box3" placeholder="new plyqor tag" autocomplete="off">
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('upload-img').addEventListener('click', function () {
+            const plyqorTag = encodeURIComponent(document.getElementById('box2').value);
+            const plyqorTagNew = encodeURIComponent(document.getElementById('box3').value);
+            const url = `WEBSITE_HOSTNAME/api/Portal?page=query-operation&operation=update-tag&session-token=dym-token&container=dym-container&plyqor-tag=${plyqorTag}&plyqor-tag-new=${plyqorTagNew}`;
+            window.location.href = url;
+        });
+    </script>
+</body>
+</html>

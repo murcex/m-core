@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PlyQor - Index</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Courier', monospace;
+      background: url('background.jpg') center center / cover no-repeat fixed;
+      height: 100vh;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 48px; /* Wider spacing between icons */
+      margin-left: 20vw; /* Off-center: between left and center */
+      margin-top: 40px;
+    }
+
+    .toolbar img {
+      width: 64px;
+      height: 64px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <a href="WEBSITE_HOSTNAME/api/Portal?page=container-list&operation=select&session-token=dym-token">
+      <img src="view-container.png" alt="Select Container" title="Select Container">
+    </a>
+    <a href="WEBSITE_HOSTNAME/api/Portal?page=container-create&session-token=dym-token">
+      <img src="add-container.png" alt="Create Container" title="Create Container">
+    </a>
+    <a href="WEBSITE_HOSTNAME/api/Portal?page=container-list&operation=delete&session-token=dym-token">
+      <img src="delete-container.png" alt="Delete Container" title="Delete Container">
+    </a>
+    <a href="WEBSITE_HOSTNAME/api/Portal?page=container-list&operation=query&session-token=dym-token">
+      <img src="query-container.png" alt="Query Container" title="Query Container">
+    </a>
+  </div>
+</body>
+</html>

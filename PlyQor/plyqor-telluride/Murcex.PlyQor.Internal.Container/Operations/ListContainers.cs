@@ -6,16 +6,8 @@ namespace Murcex.PlyQor.Internal.Container.Operations
 	{
 		public static List<string> Execute()
 		{
-			List<string> result = new();
-
 			var containerConfigs = DownloadContainers.Execute();
-
-			foreach (var container in containerConfigs)
-			{
-				result.Add(container.Name);
-			}
-
-			return result;
+			return containerConfigs.Select(container => container.Name).ToList();
 		}
 	}
 }

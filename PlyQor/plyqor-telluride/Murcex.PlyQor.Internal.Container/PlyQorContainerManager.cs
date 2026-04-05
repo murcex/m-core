@@ -29,5 +29,25 @@ namespace Murcex.PlyQor.Internal.Container
 		{
 			return Operations.GetRetentionPolicies.Execute();
 		}
+
+		public static string GetToken(string containerName)
+		{
+			return Operations.GetToken.Execute(containerName);
+		}
+
+		public static bool AddContainer(PlyQorContainer container)
+		{
+			return Operations.AddContainer.Execute(container);
+		}
+
+		public static bool UpdateContainer(PlyQorContainer container)
+		{
+			return Operations.UpdateContainer.Execute(container);
+		}
+
+		public static bool DeleteContainer(PlyQorContainer container)
+		{
+			return Operations.DeleteContainer.Execute(container);
+		}
 	}
 }

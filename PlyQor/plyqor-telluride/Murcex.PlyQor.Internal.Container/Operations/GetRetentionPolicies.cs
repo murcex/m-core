@@ -8,16 +8,9 @@ namespace Murcex.PlyQor.Internal.Container.Operations
 		{
 			var containers = DownloadContainers.Execute();
 
-			Dictionary<string, int> result = new();
-			foreach (var container in containers)
-			{
-				if (container.Retention > 0)
-				{
-					result.Add(container.Name, container.Retention);
-				}
-			}
-
-			return result;
+			return containers
+			.Where(container => container.Retention > 0)
+			.ToDictionary(container => container.Name, container => container.Retention);
 		}
 	}
 }

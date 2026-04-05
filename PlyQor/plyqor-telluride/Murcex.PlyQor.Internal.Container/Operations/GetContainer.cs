@@ -7,16 +7,16 @@ namespace Murcex.PlyQor.Internal.Container.Operations
 	{
 		public static PlyQorContainer Execute(string containerName)
 		{
-			var containerConfigs = DownloadContainers.Execute();
-
-			var container = containerConfigs.FirstOrDefault(c => c.Name == containerName);
-
-			if (container == null)
+			if (string.IsNullOrWhiteSpace(containerName))
 			{
-				container = new PlyQorContainer();
+				throw new ArgumentException("Container name must not be null or empty.", nameof(containerName));
 			}
 
-			return container;
+			var containerConfigs = DownloadContainers.Execute();
+
+			var container = containerConfigs?.FirstOrDefault(c => string.Equals(c.Name, containerName, StringComparison.OrdinalIgnoreCase));
+
+			return container ?? new PlyQorContainer();
 		}
 	}
 }

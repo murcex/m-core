@@ -20,7 +20,11 @@
 
 		public static string ContainersId { get; } = "CONTAINERS";
 
+		public static string PlyQorEndpoint => _plyQorEndpoint;
+
 		private static string _databaseConnection = string.Empty;
+
+		private static string _plyQorEndpoint = string.Empty;
 
 		public static bool Load(Dictionary<string, string> config)
 		{
@@ -30,6 +34,9 @@
 				{
 					case "connection-string":
 						_databaseConnection = config["connection-string"];
+						break;
+					case "plyqor-endpoint":
+						_plyQorEndpoint = config["plyqor-endpoint"];
 						break;
 					default:
 						throw new Exception("Invalid config type");

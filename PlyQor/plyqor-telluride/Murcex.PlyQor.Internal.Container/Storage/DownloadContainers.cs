@@ -21,34 +21,35 @@ namespace Murcex.PlyQor.Internal.Container.Storage
 		/// </summary>
 		private static string SelectContainerConfig()
 		{
-			string data = string.Empty;
-
 			try
 			{
-				using (var connection = new SqlConnection(Configuration.DatabaseConnection))
+				using var connection = new SqlConnection(Configuration.DatabaseConnection);
+				using var cmd = new SqlCommand(Configuration.SelectStoredProcedure, connection)
 				{
-					var cmd = new SqlCommand(Configuration.SelectStoredProcedure, connection);
+					CommandType = CommandType.StoredProcedure,
+					CommandTimeout = 0
+				};
 
-					cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue(Configuration.ParameterId, Configuration.ContainersId);
 
-					cmd.Parameters.AddWithValue(Configuration.ParameterId, Configuration.ContainersId);
+				connection.Open();
 
-					cmd.CommandTimeout = 0;
-
-					connection.Open();
-
-					var reader = cmd.ExecuteReader();
-					while (reader.Read())
-					{
-						data = (string)reader[Configuration.ParameterData];
-					}
-
-					return data;
+				using var reader = cmd.ExecuteReader();
+				if (reader.Read())
+				{
+					var value = reader[Configuration.ParameterData];
+					return value is string str ? str : string.Empty;
 				}
+
+				return string.Empty;
+			}
+			catch (SqlException sqlEx)
+			{
+				throw new Exception($"Database error in SelectContainerConfig: {sqlEx.Message}", sqlEx);
 			}
 			catch (Exception ex)
 			{
-				throw new Exception($"SelectContainerConfig Exception: {ex}");
+				throw new Exception($"SelectContainerConfig Exception: {ex.Message}", ex);
 			}
 		}
 
@@ -59,32 +60,41 @@ namespace Murcex.PlyQor.Internal.Container.Storage
 		{
 			if (string.IsNullOrEmpty(input))
 			{
-				return new List<PlyQorContainer>();
+				throw new ArgumentException("Input string for container config is null or empty.");
 			}
 
 			var containers_config = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(input);
 
-			List<PlyQorContainer> plyQorContainers = new List<PlyQorContainer>();
-			if (containers_config != null)
+			if (containers_config == null)
 			{
-				foreach (var container in containers_config)
+				throw new InvalidOperationException("Deserialized container config is null.");
+			}
+
+			List<PlyQorContainer> plyQorContainers = new List<PlyQorContainer>();
+			foreach (var container in containers_config)
+			{
+				var plyqorContainer = new PlyQorContainer
 				{
-					var plyqorContainer = new PlyQorContainer();
+					Name = container.Key,
+					Retention = int.Parse(container.Value["Retention"].ToString())
+				};
 
-					plyqorContainer.Name = container.Key;
+				var jsonTokens = container.Value["Tokens"];
 
-					var retention = string.Empty;
-
-					plyqorContainer.Retention = int.Parse(container.Value["Retention"]);
-
-					var tokens = JsonSerializer.Deserialize<List<string>>(container.Value["Tokens"]);
-
-					plyqorContainer.PrimaryToken = tokens != null && tokens.Count > 0 && !string.IsNullOrEmpty(tokens[0]) ? tokens[0] : "null";
-
-					plyqorContainer.SecondaryToken = tokens != null && tokens.Count > 1 && !string.IsNullOrEmpty(tokens[1]) ? tokens[1] : "null";
-
+				if (string.IsNullOrEmpty(jsonTokens))
+				{
+					plyqorContainer.PrimaryToken = string.Empty;
+					plyqorContainer.SecondaryToken = string.Empty;
 					plyQorContainers.Add(plyqorContainer);
+					continue;
 				}
+
+				var tokens = JsonSerializer.Deserialize<List<string>>(jsonTokens);
+
+				plyqorContainer.PrimaryToken = tokens != null && tokens.Count > 0 && !string.IsNullOrEmpty(tokens[0]) ? tokens[0] : string.Empty;
+				plyqorContainer.SecondaryToken = tokens != null && tokens.Count > 1 && !string.IsNullOrEmpty(tokens[1]) ? tokens[1] : string.Empty;
+
+				plyQorContainers.Add(plyqorContainer);
 			}
 
 			return plyQorContainers;

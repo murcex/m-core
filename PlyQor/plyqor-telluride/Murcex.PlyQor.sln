@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.PlyQor.Internal.Cont
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.PlyQor.Internal.Retention", "Murcex.PlyQor.Internal.Retention\Murcex.PlyQor.Internal.Retention.csproj", "{9D4C9844-CDC5-48D4-82EE-9B4010E8BF22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.PlyQor.Internal.Query", "Murcex.PlyQor.Internal.Query\Murcex.PlyQor.Internal.Query.csproj", "{63C71792-7D05-4BF6-863A-0058F00ADC3F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.PlyQor.Function.Portal", "Murcex.PlyQor.Function.Portal\Murcex.PlyQor.Function.Portal.csproj", "{0BBC74FD-72B4-4BEB-BF15-9142ACA0B115}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murcex.PlyQor.Internal.Portal", "Murcex.PlyQor.Internal.Portal\Murcex.PlyQor.Internal.Portal.csproj", "{BB2C42D9-8DCC-4A42-8197-7604F344599D}"
@@ -27,10 +25,6 @@ Global
 		{9D4C9844-CDC5-48D4-82EE-9B4010E8BF22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D4C9844-CDC5-48D4-82EE-9B4010E8BF22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D4C9844-CDC5-48D4-82EE-9B4010E8BF22}.Release|Any CPU.Build.0 = Release|Any CPU
-		{63C71792-7D05-4BF6-863A-0058F00ADC3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63C71792-7D05-4BF6-863A-0058F00ADC3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63C71792-7D05-4BF6-863A-0058F00ADC3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63C71792-7D05-4BF6-863A-0058F00ADC3F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0BBC74FD-72B4-4BEB-BF15-9142ACA0B115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0BBC74FD-72B4-4BEB-BF15-9142ACA0B115}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BBC74FD-72B4-4BEB-BF15-9142ACA0B115}.Release|Any CPU.ActiveCfg = Release|Any CPU

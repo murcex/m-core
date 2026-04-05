@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kiroku - KQuery</title>
+    <style>
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Courier, monospace;
+            color: #000;
+            margin: 0;
+        }
+
+        .container {
+            padding: 40px 30px;
+        }
+
+        .textbox {
+            height: 40px;
+            font-size: 16px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+            font-family: 'Courier';
+            display: block;
+            margin-bottom: 15px;
+            width: 400px; /* widened to support GUID + 10 characters */
+        }
+
+        .button {
+            height: 52px;
+            font-size: 16px;
+            padding: 5px 10px;
+            width: 55px;
+            background-color: white;
+            border: 1px solid black;
+            color: black;
+        }
+
+        .image {
+            display: block;
+            margin-bottom: 20px;
+            width: 64px;
+            height: 64px;
+        }
+    </style>
+    <script>
+        function useTextInURL() {
+            const textInput = document.getElementById('textBox').value;
+
+            const ustTestInUrl = 'WEBSITE_HOSTNAME/api/Portal?page=view-log&session-token=dym-token&id=' +
+                encodeURIComponent(textInput);
+
+            const queryLogUrl = 'WEBSITE_HOSTNAME/api/Portal?page=query-log&session-token=dym-token';
+
+            window.open(ustTestInUrl, '_blank');
+            setTimeout(function () {
+                window.location.href = queryLogUrl;
+            }, 500); // 500 milliseconds delay
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <img src="search.png" alt="Search Icon" class="image" />
+        <input type="text" id="textBox" class="textbox" placeholder="KLog Id" autocomplete="off" />
+        <button class="button" onclick="useTextInURL()"> + </button>
+    </div>
+</body>
+
+</html>

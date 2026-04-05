@@ -1,18 +1,46 @@
 ﻿using Murcex.PlyQor.Internal.Container.Model;
+using Murcex.PlyQor.Internal.Container.Storage;
+using System.Text.RegularExpressions;
 
 namespace Murcex.PlyQor.Internal.Container.Operations
 {
 	public class AddContainer
 	{
-		public static void Execute(PlyQorContainer container)
+		const string namePattern = @"^[a-zA-Z0-9_-]+$";
+
+		public static bool Execute(PlyQorContainer container)
 		{
-			throw new NotImplementedException();
+			// Validate container name
+			if (string.IsNullOrWhiteSpace(container.Name))
+			{
+				throw new ArgumentException("Container name cannot be null, empty, or whitespace.", nameof(container.Name));
+			}
 
-			// get containers
+			if (container.Name.Length > 30)
+			{
+				throw new ArgumentException("Container name cannot exceed 30 characters.", nameof(container.Name));
+			}
+;
+			if (!Regex.IsMatch(container.Name, namePattern))
+			{
+				throw new ArgumentException("Container name can only contain letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-).", nameof(container.Name));
+			}
 
-			// add new container
+			// Retrieve existing containers
+			var containers = DownloadContainers.Execute();
 
-			// update containers
+			// Check for duplicate container name (case-insensitive)
+			if (containers.Any(c => string.Equals(c.Name, container.Name, StringComparison.OrdinalIgnoreCase)))
+			{
+				throw new ArgumentException($"A container named '{container.Name}' already exists.", nameof(container.Name));
+			}
+
+			// Add and persist the new container
+			containers.Add(container);
+
+			new UploadContainers().Execute(containers);
+
+			return true;
 		}
 	}
 }

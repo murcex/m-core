@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PlyQor - Add Container</title>
+  <style>
+      body {
+          margin: 0;
+          padding: 20px;
+          font-family: 'Courier', monospace;
+          background: url('background.jpg') center center / cover no-repeat fixed;
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+
+      .top-left-icon {
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          z-index: 10;
+      }
+
+      .index-image {
+          width: 64px;
+          height: 64px;
+          cursor: pointer;
+      }
+
+      .upload-row {
+          margin-bottom: 20px;
+      }
+
+      .upload-image {
+          width: 64px;
+          height: 64px;
+          cursor: pointer;
+      }
+
+      .main-container {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+      }
+
+      .textbox-wrapper {
+          width: 700px;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          align-items: center;
+      }
+
+      input[type="text"] {
+          height: 40px;
+          width: 100%;
+          font-size: 16px;
+          padding: 5px;
+          text-align: center;
+          border: 1px solid black;
+          font-family: 'Courier', monospace;
+          background-color: white;
+      }
+  </style>
+</head>
+<body>
+  <div class="top-left-icon">
+    <a href="WEBSITE_HOSTNAME/api/Portal?page=plyqor-index&session-token=dym-token">
+      <img src="index.png" alt="Home" class="index-image" title="Home">
+    </a>
+  </div>
+
+  <div class="main-container">
+    <div class="upload-row">
+      <img src="upload.png" alt="Upload" class="upload-image" title="Upload" id="upload-img">
+    </div>
+
+    <div class="textbox-wrapper">
+      <input type="text" id="box1" placeholder="new-container-name" autocomplete="off">
+      <input type="text" id="box2" value="0" autocomplete="off">
+      <input type="text" id="box3" placeholder="primary-token" autocomplete="off">
+      <input type="text" id="box4" placeholder="secondary-token" autocomplete="off">
+    </div>
+  <script>
+    document.getElementById('upload-img').addEventListener('click', function() {
+      const container = encodeURIComponent(document.getElementById('box1').value);
+      const retention = encodeURIComponent(document.getElementById('box2').value);
+      const primaryToken = encodeURIComponent(document.getElementById('box3').value);
+      const secondaryToken = encodeURIComponent(document.getElementById('box4').value);
+      const url = `WEBSITE_HOSTNAME/api/Portal?page=container-operation&operation=create&session-token=dym-token&container=${container}&retention=${retention}&primary-token=${primaryToken}&secondary-token=${secondaryToken}`;
+      window.location.href = url;
+    });
+  </script>
+  </div>
+</body>
+</html>
