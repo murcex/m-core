@@ -37,10 +37,16 @@ namespace Crane.Internal.Test.CraneTypes
 		}
 
 		/// <summary>
-		/// 
+		/// Tests SQL database deployment in remote mode (Azure SQL).
+		/// Verifies that:
+		/// - The correct Azure SQL connection string is properly constructed
+		/// - All SQL files (tables, procedures, views, security) are correctly deployed
+		/// - The SQL access credentials are correctly set with the remote connection parameters
+		/// - The deployment successfully processes all SQL objects in the specified storage location
 		/// </summary>
 		[TestMethod]
 		public void TestSQLDatabaseDeploymentType_Remote()
+
 		{
 			var local = bool.FalseString;
 			var storage = Path.Combine(craneTestDir, "Database");
@@ -89,10 +95,17 @@ namespace Crane.Internal.Test.CraneTypes
 		}
 
 		/// <summary>
-		/// 
+		/// Tests SQL database deployment in local mode.
+		/// Verifies that:
+		/// - The correct local SQL connection string is properly constructed with Windows authentication
+		/// - The deployment works without requiring remote connection parameters (account, login, key)
+		/// - All SQL files (tables, procedures, views, security) are correctly deployed
+		/// - The deployment successfully processes all SQL objects in the specified storage location
+		/// - Only minimal configuration (database, storage) is needed for local deployment
 		/// </summary>
 		[TestMethod]
 		public void TestSQLDatabaseDeploymentType_Local()
+
 		{
 			var local = bool.TrueString;
 			var storage = Path.Combine(craneTestDir, "Database");
@@ -138,10 +151,17 @@ namespace Crane.Internal.Test.CraneTypes
 		}
 
 		/// <summary>
-		/// 
+		/// Tests SQL database deployment error handling when configuration entries are completely missing.
+		/// Verifies that:
+		/// - Required parameters throw exceptions when absent (database, storage)
+		/// - Local mode tolerates missing remote-specific parameters (account, login, key)
+		/// - Remote mode requires all connection parameters to be present
+		/// - Configuration structure must be valid (non-null collection and task dictionaries)
+		/// - Each test case validates expected success/failure outcomes based on parameter requirements
 		/// </summary>
 		[TestMethod]
 		public void TestSQLDatabaseDeploymentType_MissingEntry()
+
 		{
 			var test_parameters = new List<(string local, string remove, bool result)>()
 			{
@@ -268,10 +288,17 @@ namespace Crane.Internal.Test.CraneTypes
 		}
 
 		/// <summary>
-		/// 
+		/// Tests SQL database deployment error handling when configuration entries exist but have empty values.
+		/// Verifies that:
+		/// - Required parameters throw exceptions when empty (database, storage)
+		/// - Local mode tolerates empty values for remote-specific parameters
+		/// - Remote mode requires non-empty values for all connection parameters
+		/// - Configuration structure must contain valid dictionaries
+		/// - Each test case validates expected success/failure outcomes for different empty parameter scenarios
 		/// </summary>
 		[TestMethod]
 		public void TestSQLDatabaseDeploymentType_MissingEntryValue()
+
 		{
 			var test_parameters = new List<(string local, string remove, bool result)>()
 			{
@@ -400,10 +427,17 @@ namespace Crane.Internal.Test.CraneTypes
 		}
 
 		/// <summary>
-		/// 
+		/// Tests SQL database deployment resilience with problematic SQL scripts.
+		/// Verifies that:
+		/// - Deployment can process SQL scripts containing errors or exceptions
+		/// - The process continues execution after encountering problem scripts
+		/// - All SQL files are processed despite individual script failures
+		/// - The correct connection string is established before execution
+		/// - Scripts named with "exception" in their content are still processed
 		/// </summary>
 		[TestMethod]
 		public void TestSQLDatabaseDeploymentType_Failures()
+
 		{
 			var local = bool.FalseString;
 			var storage = Path.Combine(craneTestDir, "Database-2");
