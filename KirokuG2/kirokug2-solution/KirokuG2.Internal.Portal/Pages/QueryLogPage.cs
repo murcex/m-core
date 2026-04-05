@@ -3,11 +3,11 @@ using Murcex.Vyudro.Module.Client.Models;
 
 namespace KirokuG2.Internal.Portal.Pages
 {
-	public class GetTokenForPage
+	public class QueryLogPage
 	{
 		public static Dictionary<string, string> Execute(PageFuncData pageFuncData)
 		{
-			pageFuncData.KLog.Trace($"Executing Login Page Func");
+			pageFuncData.KLog.Trace($"Executing Query Log Page Func");
 
 			var dynamicElements = new Dictionary<string, string>
 			{

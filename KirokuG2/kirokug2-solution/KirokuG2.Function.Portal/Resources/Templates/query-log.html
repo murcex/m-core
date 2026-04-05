@@ -60,7 +60,9 @@
             const queryLogUrl = 'WEBSITE_HOSTNAME/api/Portal?page=query-log&session-token=dym-token';
 
             window.open(ustTestInUrl, '_blank');
-            window.location.href = queryLogUrl;
+            setTimeout(function () {
+                window.location.href = queryLogUrl;
+            }, 500); // 500 milliseconds delay
         }
     </script>
 </head>
