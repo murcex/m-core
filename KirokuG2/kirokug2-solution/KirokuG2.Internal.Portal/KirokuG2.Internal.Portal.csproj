@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Murcex.Implements.DataTools" Version="0.0.1" />
-    <PackageReference Include="Murcex.Vyudro.Client" Version="0.0.6" />
+    <PackageReference Include="Murcex.Vyudro.Client" Version="0.0.7" />
   </ItemGroup>
 
 </Project>
