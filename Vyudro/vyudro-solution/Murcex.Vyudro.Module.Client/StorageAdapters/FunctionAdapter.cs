@@ -1,15 +1,16 @@
 ﻿using Murcex.Vyudro.Module.Client.Interface;
 using Murcex.Vyudro.Module.Client.Managers;
+using System.Collections.Concurrent;
 
 namespace Murcex.Vyudro.Module.Client.StorageAdapters
 {
 	public class FunctionAdapter : IStorageAdapter
 	{
-		private static Dictionary<string, string> _templates = new();
+		private ConcurrentDictionary<string, string> _templates = new();
 
-		private static Dictionary<string, List<string>> _userAccess = new();
+		private ConcurrentDictionary<string, List<string>> _userAccess = new();
 
-		private Dictionary<string, string> _sessionTokens = new();
+		private ConcurrentDictionary<string, string> _sessionTokens = new();
 
 		public FunctionAdapter(Dictionary<string, string> cfg, bool isSession = false)
 		{
@@ -28,7 +29,11 @@ namespace Murcex.Vyudro.Module.Client.StorageAdapters
 			}
 			else
 			{
-				_templates = ResourceManager.LoadFiles("Templates");
+				var templates = ResourceManager.LoadFiles("Templates");
+				foreach (var template in templates)
+				{
+					_templates.TryAdd(template.Key, template.Value);
+				}
 			}
 		}
 
@@ -59,7 +64,7 @@ namespace Murcex.Vyudro.Module.Client.StorageAdapters
 
 		public bool GetUserAccess(string manifest, out Dictionary<string, List<string>> userAccess, out string message)
 		{
-			userAccess = _userAccess;
+			userAccess = new Dictionary<string, List<string>>(_userAccess);
 			message = string.Empty;
 
 			return true;
@@ -98,20 +103,21 @@ namespace Murcex.Vyudro.Module.Client.StorageAdapters
 				}
 				else
 				{
-					message = "get session token timestamp complete";
+					message = $"get session token timestamp complete {timestamp}";
 					return true;
 				}
 			}
 			else
 			{
-				message = "session token not found";
+				message = $"session token not found for {token}";
+				timestamp = string.Empty;
 				return false;
 			}
 		}
 
 		public bool DeleteSessionToken(string token, out string message)
 		{
-			if (_sessionTokens.Remove(token))
+			if (_sessionTokens.TryRemove(token, out _))
 			{
 				message = "token delete complete";
 				return true;

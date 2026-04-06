@@ -5,7 +5,7 @@ using System.Net.Security;
 
 namespace KirokuG2.Internal.Portal.Pages
 {
-	public class GetLogFunc
+	public class ViewLogPage
 	{
 		private static HttpClient _httpClient = new HttpClient(GetHttpClientHandler());
 

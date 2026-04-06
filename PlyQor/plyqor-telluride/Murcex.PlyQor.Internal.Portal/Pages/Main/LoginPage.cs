@@ -1,9 +1,9 @@
 ﻿using Murcex.Implements.DataTools.Extensions;
 using Murcex.Vyudro.Module.Client.Models;
 
-namespace KirokuG2.Internal.Portal.Pages
+namespace Murcex.PlyQor.Internal.Portal.Pages.Main
 {
-	public class GetTokenForPage
+	public class LoginPage
 	{
 		public static Dictionary<string, string> Execute(PageFuncData pageFuncData)
 		{
