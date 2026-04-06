@@ -3,6 +3,7 @@ using Murcex.Implements.DataTools.Extensions;
 using Murcex.Vyudro.Module.Client.Interface;
 using Murcex.Vyudro.Module.Client.StorageAdapters;
 using System.Collections.Concurrent;
+using System.Globalization;
 
 namespace Murcex.Vyudro.Module.Client.Managers
 {
@@ -10,7 +11,7 @@ namespace Murcex.Vyudro.Module.Client.Managers
 	{
 		private ConcurrentDictionary<string, DateTime> _cacheTokens = new ConcurrentDictionary<string, DateTime>();
 
-		private List<string> _invalidToken = new List<string>();
+		private ConcurrentBag<string> _invalidToken = new ConcurrentBag<string>();
 
 		private int _sessionLimit = 15;
 
@@ -125,6 +126,25 @@ namespace Murcex.Vyudro.Module.Client.Managers
 			}
 		}
 
+		public bool CreateSessionToken(HttpRequest request, out string token, out string message)
+		{
+			token = Guid.NewGuid().ToString();
+			var timestamp = DateTime.UtcNow.AddMinutes(_sessionLimit);
+
+			if (_storageAdapter.InsertSessionToken(token, timestamp.ToString("o", CultureInfo.InvariantCulture), out string adapterMessage))
+			{
+				_cacheTokens.TryAdd(token, timestamp);
+
+				message = $"token created: {adapterMessage}";
+				return true;
+			}
+			else
+			{
+				message = $"token failed to created: {adapterMessage}";
+				return false;
+			}
+		}
+
 		public bool CheckSessionToken(HttpRequest request, out string token, out string message)
 		{
 			token = request.Query["session-token"];
@@ -139,16 +159,16 @@ namespace Murcex.Vyudro.Module.Client.Managers
 
 			if (_cacheTokens.TryGetValue(token, out timestamp))
 			{
-				if (IsSessionTokenExpired(timestamp))
+				if (IsSessionTokenExpired(timestamp, out string expiredMessage))
 				{
 					_cacheTokens.Remove(token, out _);
 					_invalidToken.Add(token);
-					message = "token expired";
+					message = $"token expired <- {expiredMessage}";
 					return false;
 				}
 				else
 				{
-					message = "token approved";
+					message = $"token approved <- {expiredMessage}";
 					return true;
 				}
 			}
@@ -156,52 +176,33 @@ namespace Murcex.Vyudro.Module.Client.Managers
 			{
 				if (_invalidToken.Contains(token))
 				{
-					message = "token invalid";
+					message = "token invalid (cache)";
 					return false;
 				}
 				else
 				{
-					if (GetSessionTokenTimeStamp(token, out timestamp))
+					if (GetSessionTokenTimeStamp(token, out timestamp, out message))
 					{
-						if (IsSessionTokenExpired(timestamp))
+						if (IsSessionTokenExpired(timestamp, out string expiredMessage))
 						{
 							_invalidToken.Add(token);
-							message = "token expired";
+							message = $"token expired <- {expiredMessage} <- {message}";
 							return false;
 						}
 						else
 						{
 							_cacheTokens.TryAdd(token, timestamp);
-							message = "token approved";
+							message = $"token approved <- {expiredMessage} <- {message}";
 							return true;
 						}
 					}
 					else
 					{
 						_invalidToken.Add(token);
-						message = "token invalid";
+						message = $"token invalid (storage) <- {message}";
 						return false;
 					}
 				}
-			}
-		}
-
-		public bool CreateSessionToken(HttpRequest request, out string token, out string message)
-		{
-			token = Guid.NewGuid().ToString();
-			var timestamp = DateTime.UtcNow.AddMinutes(_sessionLimit);
-
-			if (_storageAdapter.InsertSessionToken(token, timestamp.ToString(), out string adapterMessage))
-			{
-				_cacheTokens.TryAdd(token, timestamp);
-
-				message = $"token created: {adapterMessage}";
-				return true;
-			}
-			else
-			{
-				message = $"token failed to created: {adapterMessage}";
-				return false;
 			}
 		}
 
@@ -231,33 +232,43 @@ namespace Murcex.Vyudro.Module.Client.Managers
 			}
 		}
 
-		private bool IsSessionTokenExpired(DateTime timestamp)
+		private bool IsSessionTokenExpired(DateTime timestamp, out string message)
 		{
-			if (timestamp < DateTime.UtcNow.AddMinutes(-15))
+			if (timestamp < DateTime.UtcNow)
 			{
+				message = $"session token is expired ({timestamp} < {DateTime.UtcNow})";
 				return true;
 			}
-
-			return false;
+			else
+			{
+				message = "session token is valid";
+				return false;
+			}
 		}
 
-		private bool GetSessionTokenTimeStamp(string token, out DateTime expiration)
+		private bool GetSessionTokenTimeStamp(string token, out DateTime expiration, out string message)
 		{
-			if (_storageAdapter.GetSessionTokenTimestamp(token, out string timestampValue, out string message))
+			if (_storageAdapter.GetSessionTokenTimestamp(token, out string timestampValue, out message))
 			{
-
 				if (string.IsNullOrEmpty(timestampValue))
 				{
+					message = $"timestamp value is empty <- {message}";
 					expiration = DateTime.MinValue;
 					return false;
 				}
 
-				expiration = Convert.ToDateTime(timestampValue);
+				if (!DateTime.TryParse(timestampValue, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out expiration))
+				{
+					message = $"timestamp value is not valid <- {expiration} <- {timestampValue} <- {message}";
+					expiration = DateTime.MinValue;
+					return false;
+				}
 
 				return true;
 			}
 			else
 			{
+				message = $"failed to get session token timestamp <- {message}";
 				expiration = DateTime.MinValue;
 				return false;
 			}
