@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PlyQor - Query Operation List</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Courier', monospace;
+            background: url('background.jpg') center center / cover no-repeat fixed;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .top-left-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+
+        .index-image {
+            width: 64px;
+            height: 64px;
+            cursor: pointer;
+        }
+
+    .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dropdown-image-row {
+            margin-bottom: 20px;
+        }
+
+        .dropdown-image {
+            width: 64px;
+            height: 64px;
+        }
+
+        .dropdown-wrapper {
+            width: 700px;
+        }
+
+        select {
+            height: 55px;
+            width: 100%;
+            font-size: 16px;
+            padding: 5px;
+            text-align: center;
+            text-align-last: center;
+            border: 1px solid #666;
+            border-radius: 0;
+            box-shadow: none;
+            font-family: 'Courier', monospace;
+            background-color: white;
+            appearance: menulist;
+            -webkit-appearance: menulist;
+            -moz-appearance: menulist;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-left-icon">
+        <a href="WEBSITE_HOSTNAME/api/Portal?page=plyqor-index&session-token=dym-token">
+            <img src="index.png" alt="Home" class="index-image" title="Home">
+        </a>
+    </div>
+    <div class="main-container">
+        <div class="dropdown-image-row">
+            <img src="dropdown.png" alt="Dropdown" class="dropdown-image">
+        </div>
+        <div class="dropdown-wrapper">
+            <select id="operationSelect" onchange="openOperationPage()">
+                <option value=""></option>
+                <option value="query-insert">Insert</option>
+                <option value="query-select">Select</option>
+                <option value="query-select-list">Select List</option>
+                <option value="query-select-tags">Select Tags</option>
+                <option value="query-update">Update</option>
+                <option value="query-update-tag">Update Tag</option>
+                <option value="query-delete">Delete</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+        function openOperationPage() {
+            const selected = document.getElementById('operationSelect').value;
+            if (!selected) return;
+            const url = `WEBSITE_HOSTNAME/api/Portal?page=${selected}&session-token=dym-token&container=dym-container`;
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>

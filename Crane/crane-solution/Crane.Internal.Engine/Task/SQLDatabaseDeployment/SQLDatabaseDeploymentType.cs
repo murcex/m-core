@@ -153,12 +153,26 @@ namespace Crane.Internal.Engine.Task.SQLDatabaseDeployment
 				throw new CraneException();
 			}
 
+			// dataSource
+			string? dataSource;
+			if (taskCfg.TryGetValue("dataSource", out dataSource))
+			{
+				if (string.IsNullOrEmpty(dataSource))
+				{
+					dataSource = "localhost";
+				}
+			}
+			else
+			{
+				dataSource = "localhost";
+			}
+
 			// build connection string
 			string? connectionString;
 			if (isLocal)
 			{
 				// local conn
-				connectionString = $"Integrated Security=SSPI; Persist Security Info=False; Initial Catalog={database}; Data Source=localhost; Encrypt=False;";
+				connectionString = $"Integrated Security=SSPI; Persist Security Info=False; Initial Catalog={database}; Data Source={dataSource}; Encrypt=False;";
 			}
 			else
 			{
