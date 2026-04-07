@@ -5,7 +5,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <PackageId>Murcex.Implements.Configuration</PackageId>
     <Description>Configuration Serialize and Deserialize Utility</Description>
     <Title>Murcex Implements Configuration</Title>
