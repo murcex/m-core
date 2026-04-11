@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Murcex.Implements.DataTools" Version="0.0.1" />
-    <PackageReference Include="Murcex.Vyudro.Client" Version="0.0.7" />
+    <PackageReference Include="Murcex.Implements.DataTools" Version="0.0.2" />
+    <PackageReference Include="Murcex.Vyudro.Client" Version="0.0.8" />
   </ItemGroup>
 
 </Project>

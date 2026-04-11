@@ -1,19 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
-    <ApplicationIcon />
-    <StartupObject />
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <PackageId>Murcex.Configurator</PackageId>
     <Description>Azure Function Configuration Utility Client</Description>
-    <Title>Murcex Configurator</Title>
     <Company>Murcex</Company>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Murcex.Implements.Configuration" Version="1.0.0" />
+    <PackageReference Include="Murcex.Implements.Configuration" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

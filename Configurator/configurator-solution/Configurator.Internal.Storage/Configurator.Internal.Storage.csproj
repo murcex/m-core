@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Murcex.Implements.Configuration" Version="1.0.0" />
-    <PackageReference Include="Murcex.KirokuG2" Version="1.0.0" />
+    <PackageReference Include="Murcex.Implements.Configuration" Version="1.0.1" />
+    <PackageReference Include="Murcex.KirokuG2" Version="1.0.1" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 

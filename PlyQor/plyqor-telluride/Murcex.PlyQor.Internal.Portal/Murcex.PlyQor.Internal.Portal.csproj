@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Murcex.Implements.DataTools" Version="0.0.1" />
-    <PackageReference Include="Murcex.KirokuG2" Version="1.0.0" />
-    <PackageReference Include="Murcex.PlyQor.Client" Version="1.0.0" />
-    <PackageReference Include="Murcex.Vyudro.Client" Version="0.0.7" />
+    <PackageReference Include="Murcex.Implements.DataTools" Version="0.0.2" />
+    <PackageReference Include="Murcex.KirokuG2" Version="1.0.1" />
+    <PackageReference Include="Murcex.PlyQor.Client" Version="1.0.1" />
+    <PackageReference Include="Murcex.Vyudro.Client" Version="0.0.8" />
   </ItemGroup>
 
   <ItemGroup>

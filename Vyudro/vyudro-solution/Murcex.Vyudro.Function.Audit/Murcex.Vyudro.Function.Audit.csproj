@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
   </PropertyGroup>
 
@@ -9,7 +9,7 @@
     <!-- Function & Custom Dependencies -->
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.6.0" />
-    <PackageReference Include="Murcex.Configurator" Version="1.0.0" />
+    <PackageReference Include="Murcex.Configurator" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
