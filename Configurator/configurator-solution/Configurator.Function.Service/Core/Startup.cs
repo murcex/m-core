@@ -7,15 +7,15 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 
 namespace ConfiguratorApp.Core
 {
-    public class Startup : FunctionsStartup
-    {
-        public override void Configure(IFunctionsHostBuilder builder)
-        {
-            var config = ConfiguratorManager.Execute();
+	public class Startup : FunctionsStartup
+	{
+		public override void Configure(IFunctionsHostBuilder builder)
+		{
+			var config = ConfiguratorManager.Execute();
 
-            CfgSvcManager.Initialize(config);
+			CfgSvcManager.Initialize(config);
 
-            KManager.Configure(true);
-        }
-    }
+			KManager.Configure(true);
+		}
+	}
 }
