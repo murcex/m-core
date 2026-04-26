@@ -8,13 +8,13 @@ namespace Implements.Function.Queue.Target.Components
 {
 	public class QueueProcessor
 	{
-		public static void Execute(List<object> items)
+        public static void Execute(List<string> items)
 		{
 			foreach (var item in items)
 			{
 				try
 				{
-					var id = item.ToString();
+                    var id = item.ToString();
 
 					var result = SQLStorage.UpdateRecord(id);
 

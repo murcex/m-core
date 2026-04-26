@@ -163,7 +163,7 @@ namespace Implements.Module.Queue.Test
 			var batch = new Batch();
 			var logTracker = new List<string>();
 
-			var queue = new QueueManager(config.Limit, config.Duration, Utilities.CreateTestAction(objTracker, batch), Utilities.CreateTestLogger(logTracker));
+            var queue = new QueueManager<string>(config.Limit, config.Duration, Utilities.CreateTestAction(objTracker, batch), Utilities.CreateTestLogger(logTracker));
 
 			foreach (var sample in samples)
 			{
@@ -185,7 +185,7 @@ namespace Implements.Module.Queue.Test
 			var batch = new Batch();
 			var logTracker = new List<string>();
 
-			var queue = new QueueManager(config.Limit, config.Duration, Utilities.CreateTestAction(objTracker, batch), Utilities.CreateTestLogger(logTracker));
+            var queue = new QueueManager<string>(config.Limit, config.Duration, Utilities.CreateTestAction(objTracker, batch), Utilities.CreateTestLogger(logTracker));
 
 			var totalSamples = samples.Count;
 			var groupSizes = new List<int>();
@@ -240,7 +240,7 @@ namespace Implements.Module.Queue.Test
 			var batch = new Batch();
 			var logTracker = new List<string>();
 
-			var queue = new QueueManager(config.Limit, config.Duration, Utilities.CreateTestAction(objTracker, batch), Utilities.CreateTestLogger(logTracker));
+            var queue = new QueueManager<string>(config.Limit, config.Duration, Utilities.CreateTestAction(objTracker, batch), Utilities.CreateTestLogger(logTracker));
 
 			var samples = new List<string>();
 
@@ -272,7 +272,7 @@ namespace Implements.Module.Queue.Test
 			var batch = new Batch();
 			var logTracker = new List<string>();
 
-			var queue = new QueueManager(config.Limit, config.Duration, Utilities.CreateExceptionTestAction(objTracker, batch), Utilities.CreateTestLogger(logTracker));
+            var queue = new QueueManager<string>(config.Limit, config.Duration, Utilities.CreateExceptionTestAction(objTracker, batch), Utilities.CreateTestLogger(logTracker));
 
 			foreach (var sample in samples)
 			{

@@ -1,21 +1,26 @@
-﻿using System.Collections.Concurrent;
-using System.Transactions;
+﻿using System;
+using System;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Implements.Module.Queue
 {
 	/// <summary>
 	// This class represents a queue manager that allows enqueueing objects and executing actions on the enqueued objects based on certain triggers.
 	/// </summary>
-	public class QueueManager
+	public class QueueManager<T>
 	{
 		///
 		/// --- Queue Configuration ---
 		///
 
 		/// <summary>
-		/// Represents the queue that stores the enqueued objects.
+		/// Represents the queue that stores the enqueued items.
 		/// </summary>
-		private readonly ConcurrentQueue<object> _queue;
+		private readonly ConcurrentQueue<T> _queue;
 
 		/// <summary>
 		/// Represents the maximum number of items allowed in the queue.
@@ -30,7 +35,7 @@ namespace Implements.Module.Queue
 		/// <summary>
 		/// Represents the action to be executed on the items in the queue.
 		/// </summary>
-		private readonly Action<List<object>> _action;
+		private readonly Action<List<T>> _action;
 
 		/// <summary>
 		/// Represents the optional logger function to log messages.
@@ -43,23 +48,32 @@ namespace Implements.Module.Queue
 
 		/// <summary>
 		/// Represents the state of the queue manager indicating if it is active or not.
+		/// 0 = inactive, 1 = active. Uses Interlocked for atomic reads/writes.
 		/// </summary>
-		private bool _active;
+		private int _active;
 
 		/// <summary>
 		/// Represents the state of the queue manager indicating if it is currently processing items.
+		/// 0 = not processing, 1 = processing. Uses Interlocked for atomic guarding.
 		/// </summary>
-		private bool _processing;
+		private int _processing;
 
 		/// <summary>
 		/// Represents the cancellation token source used to cancel the queue processor.
+		/// Access to replacing/disposing the token is protected by `_stateLock`.
 		/// </summary>
 		private CancellationTokenSource _token;
 
 		/// <summary>
 		/// Represents the flag indicating if the queue manager has been shut down.
+		/// 0 = running, 1 = shutdown. Uses Interlocked for atomic transition.
 		/// </summary>
-		private bool _shutdown;
+		private int _shutdown;
+
+		/// <summary>
+		/// Lock object to protect compound state transitions (token replacement and active flag changes).
+		/// </summary>
+		private readonly object _stateLock = new();
 
 		/// <summary>
 		/// Initializes a new instance of the QueueManager class.
@@ -68,16 +82,17 @@ namespace Implements.Module.Queue
 		/// <param name="duration">The duration in milliseconds after which the queue processor will be triggered.</param>
 		/// <param name="action">The action to be executed on the items in the queue.</param>
 		/// <param name="logger">The optional logger function to log messages.</param>
-		public QueueManager(int limit, int duration, Action<List<object>> action, Action<string>? logger = null)
+		public QueueManager(int limit, int duration, Action<List<T>> action, Action<string>? logger = null)
 		{
-			_queue = new();
+			_queue = new ConcurrentQueue<T>();
 			_limit = limit;
 			_duration = duration;
-			_action = action;
-			_logger = logger ?? ((_) => { });
-			_active = false;
-			_processing = false;
-			_token = new();
+			_action = action ?? throw new ArgumentNullException(nameof(action));
+			_logger = logger ?? (_ => { });
+			_active = 0;
+			_processing = 0;
+			_shutdown = 0;
+			_token = new CancellationTokenSource();
 		}
 
 		/// <summary>
@@ -85,9 +100,9 @@ namespace Implements.Module.Queue
 		/// </summary>
 		/// <param name="obj">The object to enqueue.</param>
 		/// <returns>True if the object was successfully enqueued, false otherwise.</returns>
-		public bool Enqueue(object obj)
+		public bool Enqueue(T obj)
 		{
-			if (_shutdown)
+			if (Interlocked.CompareExchange(ref _shutdown, 0, 0) == 1)
 			{
 				return false;
 			}
@@ -96,30 +111,53 @@ namespace Implements.Module.Queue
 
 			_logger($"t={DateTime.UtcNow},k=add_item,v={_queue.Count}");
 
-			if (_active)
+			// fast-path: if active, check for limit trigger
+			if (Interlocked.CompareExchange(ref _active, 0, 0) == 1)
 			{
 				if (_queue.Count >= _limit)
 				{
-					_token.Cancel();
+					CancellationTokenSource tokenToCancel;
+					lock (_stateLock)
+					{
+						tokenToCancel = _token;
+					}
+
+					try { tokenToCancel?.Cancel(); } catch (ObjectDisposedException) { }
 
 					var id = GetInstanceId();
-
-					Task.Factory.StartNew(() => Trigger(id), TaskCreationOptions.None).ConfigureAwait(false);
+					Task.Run(async () =>
+					{
+						try { await Trigger(id).ConfigureAwait(false); }
+						catch (Exception ex) { _logger($"t={DateTime.UtcNow},i={id},k=trigger_exception,v={ex}"); }
+					});
 
 					_logger($"t={DateTime.UtcNow},i={id},k=queue_limit_triggered,v={_queue.Count}");
 				}
 			}
 			else
 			{
-				_token = new();
+				lock (_stateLock)
+				{
+					if (Interlocked.CompareExchange(ref _shutdown, 0, 0) == 1)
+					{
+						return false;
+					}
 
-				var id = GetInstanceId();
+					var previous = _token;
+					_token = new CancellationTokenSource();
+					try { previous?.Dispose(); } catch { }
 
-				Task.Factory.StartNew(() => AsyncTrigger(id, _token.Token), TaskCreationOptions.LongRunning).ConfigureAwait(false);
+					var id = GetInstanceId();
+					Interlocked.Exchange(ref _active, 1);
 
-				_active = true;
+					Task.Run(async () =>
+					{
+						try { await AsyncTrigger(id, _token.Token).ConfigureAwait(false); }
+						catch (Exception ex) { _logger($"t={DateTime.UtcNow},i={id},k=async_trigger_exception,v={ex}"); }
+					});
 
-				_logger($"t={DateTime.UtcNow},k=queue_async_triggered,v={id}");
+					_logger($"t={DateTime.UtcNow},k=queue_async_triggered,v={id}");
+				}
 			}
 
 			return true;
@@ -131,16 +169,24 @@ namespace Implements.Module.Queue
 		/// <returns>True if the queue manager was successfully shut down, false otherwise.</returns>
 		public bool Shutdown()
 		{
-			if (_shutdown)
+			if (Interlocked.Exchange(ref _shutdown, 1) == 1)
 			{
 				return false;
 			}
-			else
+
+			// cancel and dispose current token safely
+			CancellationTokenSource tokenToCancel;
+			lock (_stateLock)
 			{
-				_shutdown = true;
-				_token.Cancel();
-				return true;
+				tokenToCancel = _token;
+				_token = new CancellationTokenSource();
+				Interlocked.Exchange(ref _active, 0);
 			}
+
+			try { tokenToCancel?.Cancel(); } catch (ObjectDisposedException) { }
+			try { tokenToCancel?.Dispose(); } catch { }
+
+			return true;
 		}
 
 		/// <summary>
@@ -149,7 +195,7 @@ namespace Implements.Module.Queue
 		/// <returns>True if the queue manager is active, false otherwise.</returns>
 		public bool IsActive()
 		{
-			return _active;
+			return Interlocked.CompareExchange(ref _active, 0, 0) == 1;
 		}
 
 		/// <summary>
@@ -159,7 +205,7 @@ namespace Implements.Module.Queue
 		/// <returns>A task representing the asynchronous operation.</returns>
 		private async Task Trigger(string id)
 		{
-			await Task.Run(() => { ExecuteTrigger(id, TriggerType.Limit); });
+			await Task.Run(() => ExecuteTrigger(id, TriggerType.Limit)).ConfigureAwait(false);
 		}
 
 		/// <summary>
@@ -170,7 +216,17 @@ namespace Implements.Module.Queue
 		/// <returns>A task representing the asynchronous operation.</returns>
 		private async Task AsyncTrigger(string id, CancellationToken token)
 		{
-			await Task.Delay(_duration, token).ContinueWith(_ => { ExecuteTrigger(id, TriggerType.Duration); }, token);
+			try
+			{
+				await Task.Delay(_duration, token).ConfigureAwait(false);
+			}
+			catch (TaskCanceledException)
+			{
+				// cancelled by limit or shutdown
+				return;
+			}
+
+			ExecuteTrigger(id, TriggerType.Duration);
 		}
 
 		/// <summary>
@@ -182,52 +238,71 @@ namespace Implements.Module.Queue
 		{
 			_logger($"t={DateTime.UtcNow},i={id},k=execute_queue_processor,v={type}");
 
-			if (_processing)
+			// acquire processing guard
+			if (Interlocked.CompareExchange(ref _processing, 1, 0) == 1)
 			{
 				_logger($"t={DateTime.UtcNow},i={id},k=processor_status,v=locked");
 				return;
 			}
-			else
-			{
-				_processing = true;
-				_logger($"t={DateTime.UtcNow},i={id},k=processor_status,v=locking");
-			}
 
-			List<object> objs = new();
+			_logger($"t={DateTime.UtcNow},i={id},k=processor_status,v=locking");
 
-			while (_queue.Any())
-			{
-				if (_queue.TryDequeue(out var obj))
-				{
-					objs.Add(obj);
-				}
-			}
+            // Process batches until queue is empty. This avoids a race where
+            // triggers arriving while processing return early and leave items unprocessed.
+            int totalProcessed = 0;
+            try
+            {
+                while (true)
+                {
+                    List<T> objs = new List<T>();
+                    while (_queue.TryDequeue(out var obj))
+                    {
+                        objs.Add(obj);
+                    }
 
-			_processing = false;
+                    if (objs.Count == 0)
+                    {
+                        break;
+                    }
 
-			_active = false;
+                    totalProcessed += objs.Count;
 
-			_token = new();
+                    _logger($"t={DateTime.UtcNow},i={id},k=processor_action_count,v={objs.Count}");
+                    _logger($"t={DateTime.UtcNow},i={id},k=processor_queue_count,v={_queue.Count}");
 
-			_logger($"t={DateTime.UtcNow},i={id},k=processor_status,v=unlocked");
-			_logger($"t={DateTime.UtcNow},i={id},k=processor_action_count,v={objs.Count}");
-			_logger($"t={DateTime.UtcNow},i={id},k=processor_queue_count,v={_queue.Count}");
+                    try
+                    {
+                        _logger($"t={DateTime.UtcNow},i={id},k=action_status,v=executing");
+                        _action(objs);
+                        _logger($"t={DateTime.UtcNow},i={id},k=action_status,v=completed");
+                    }
+                    catch (Exception ex)
+                    {
+                        var data = ex.ToString().Replace(",", "").Replace("=", "");
+                        _logger($"t={DateTime.UtcNow},i={id},k=action_status,v=exception");
+                        _logger($"t={DateTime.UtcNow},i={id},k=action_exception,v={data}");
+                    }
+                }
+            }
+            finally
+            {
+                // reset active and replace token under lock once processing fully complete
+                CancellationTokenSource previous;
+                lock (_stateLock)
+                {
+                    Interlocked.Exchange(ref _active, 0);
+                    previous = _token;
+                    _token = new CancellationTokenSource();
+                }
 
-			try
-			{
-				_logger($"t={DateTime.UtcNow},i={id},k=action_status,v=executing");
+                try { previous?.Dispose(); } catch { }
 
-				_action(objs);
+                _logger($"t={DateTime.UtcNow},i={id},k=processor_status,v=unlocked");
+                _logger($"t={DateTime.UtcNow},i={id},k=processor_action_total,v={totalProcessed}");
 
-				_logger($"t={DateTime.UtcNow},i={id},k=action_status,v=completed");
-			}
-			catch (Exception ex)
-			{
-				var data = ex.ToString().Replace(",", "").Replace("=", "");
-
-				_logger($"t={DateTime.UtcNow},i={id},k=action_status,v=exception");
-				_logger($"t={DateTime.UtcNow},i={id},k=action_exception,v={data}");
-			}
+                // release processing flag after all batches processed
+                Interlocked.Exchange(ref _processing, 0);
+            }
 		}
 
 		/// <summary>

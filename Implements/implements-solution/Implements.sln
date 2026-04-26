@@ -25,6 +25,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Implements.Function.Queue.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implements.Function.Queue.Target", "Implements.Function.Queue.Target\Implements.Function.Queue.Target.csproj", "{10E51F69-BDBE-49D9-9D5F-DF510DAEF65B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Markdown", "Markdown", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		current-test-summary.md = current-test-summary.md
+		Implements.Module.Queue\QueueManager.md = Implements.Module.Queue\QueueManager.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +86,7 @@ Global
 		{C07B3C76-8059-4ED8-AD36-D95B089747C9} = {4B5348E6-370C-4867-B3E2-D7A720E5D523}
 		{CC7C15D3-6186-401E-AB54-43125C25301E} = {4B5348E6-370C-4867-B3E2-D7A720E5D523}
 		{10E51F69-BDBE-49D9-9D5F-DF510DAEF65B} = {4B5348E6-370C-4867-B3E2-D7A720E5D523}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {4B5348E6-370C-4867-B3E2-D7A720E5D523}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9BF02F2-F099-4A9C-A7B1-520CE4D7DC14}

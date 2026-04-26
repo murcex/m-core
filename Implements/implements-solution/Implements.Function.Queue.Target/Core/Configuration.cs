@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 namespace Implements.Function.Queue.Target.Core
 {
-	public class Configuration
-	{
-		private static QueueManager _queue;
+    public class Configuration
+    {
+        private static QueueManager<string> _queue;
 
 		private static string _database;
 
 		private static string _token;
 
-		public static QueueManager Queue => _queue;
+        public static QueueManager<string> Queue => _queue;
 
 		public static string Database => _database;
 
@@ -39,7 +39,7 @@ namespace Implements.Function.Queue.Target.Core
 
 		private static bool PostLoad()
 		{
-			_queue = new QueueManager(2, 10000, QueueProcessor.Execute, QueueProcessor.Logger);
+            _queue = new QueueManager<string>(2, 10000, QueueProcessor.Execute, QueueProcessor.Logger);
 
 			return true;
 		}
