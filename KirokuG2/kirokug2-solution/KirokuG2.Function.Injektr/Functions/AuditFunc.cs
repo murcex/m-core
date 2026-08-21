@@ -1,17 +1,24 @@
 namespace KirokuG2.Injektr.Functions
 {
-	using Microsoft.Azure.WebJobs;
+	using Microsoft.Azure.Functions.Worker;
 	using Microsoft.Extensions.Logging;
 	using System;
 
 	public class AuditFunc
 	{
-		[FunctionName("Kiroku-Audit")]
-		public void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext executionContext)
+		private readonly ILogger<AuditFunc> logger;
+
+		public AuditFunc(ILogger<AuditFunc> logger)
+		{
+			this.logger = logger;
+		}
+
+		[Function("Kiroku-Audit")]
+		public void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, FunctionContext functionContext)
 		{
 			try
 			{
-				using (var klog = KManager.NewInstance(executionContext.FunctionName))
+				using (var klog = KManager.NewInstance(functionContext.FunctionDefinition.Name))
 				{
 					try
 					{

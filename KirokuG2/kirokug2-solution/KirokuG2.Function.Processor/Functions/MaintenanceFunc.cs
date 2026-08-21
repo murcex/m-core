@@ -1,7 +1,7 @@
 namespace KirokuG2.Processor.Functions
 {
 	using KirokuG2.Processor.Core;
-	using Microsoft.Azure.WebJobs;
+	using Microsoft.Azure.Functions.Worker;
 	using Microsoft.Data.SqlClient;
 	using Microsoft.Extensions.Logging;
 	using System;
@@ -9,6 +9,8 @@ namespace KirokuG2.Processor.Functions
 
 	public class MaintenanceFunc
 	{
+		private readonly ILogger<MaintenanceFunc> logger;
+
 		private static readonly List<string> tables = new List<string>()
 		{
 			"Activation",
@@ -20,10 +22,15 @@ namespace KirokuG2.Processor.Functions
 			"Quarantine"
 		};
 
-		[FunctionName("Kiroku-Maintenance")]
-		public void Run([TimerTrigger("0 0 12 * * *")] TimerInfo myTimer, ILogger log, ExecutionContext executionContext)
+		public MaintenanceFunc(ILogger<MaintenanceFunc> logger)
 		{
-			using (var klog = KManager.NewInstance(executionContext.FunctionName))
+			this.logger = logger;
+		}
+
+		[Function("Kiroku-Maintenance")]
+		public void Run([TimerTrigger("0 0 12 * * *")] TimerInfo myTimer, FunctionContext functionContext)
+		{
+			using (var klog = KManager.NewInstance(functionContext.FunctionDefinition.Name))
 			{
 				try
 				{

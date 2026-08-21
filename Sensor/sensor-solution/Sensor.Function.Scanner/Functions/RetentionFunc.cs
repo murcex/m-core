@@ -1,15 +1,15 @@
 namespace SensorApp
 {
     using KirokuG2;
-    using Microsoft.Azure.WebJobs;
+    using Microsoft.Azure.Functions.Worker;
     using Microsoft.Extensions.Logging;
     using Sensor;
     using System;
 
-    public static class RetentionFunc
+    public class RetentionFunc
     {
-        [FunctionName("Sensor-Retention")]
-        public static void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log)
+        [Function("Sensor-Retention")]
+        public void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer)
         {
             try
             {

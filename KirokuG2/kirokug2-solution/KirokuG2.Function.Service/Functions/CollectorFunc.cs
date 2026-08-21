@@ -3,19 +3,25 @@ namespace KirokuG2.Service.Functions
 	using KirokuG2.Service.Core;
 	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.Azure.WebJobs;
-	using Microsoft.Azure.WebJobs.Extensions.Http;
+	using Microsoft.Azure.Functions.Worker;
 	using Microsoft.Extensions.Logging;
 	using System;
 	using System.IO;
 	using System.Threading.Tasks;
 
-	public static class CollectorFunc
+	public class CollectorFunc
 	{
-		[FunctionName("Collector")]
-		public static async Task<IActionResult> Run(
+		private readonly ILogger<CollectorFunc> logger;
+
+		public CollectorFunc(ILogger<CollectorFunc> logger)
+		{
+			this.logger = logger;
+		}
+
+		[Function("Collector")]
+		public async Task<IActionResult> Run(
 			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-			ILogger log)
+			FunctionContext functionContext)
 		{
 			string responseMessage = string.Empty;
 

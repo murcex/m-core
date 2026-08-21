@@ -4,17 +4,22 @@ namespace ConfiguratorApp.Functions
     using KirokuG2;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Azure.WebJobs;
-    using Microsoft.Azure.WebJobs.Extensions.Http;
+    using Microsoft.Azure.Functions.Worker;
     using Microsoft.Extensions.Logging;
     using System;
 
-    public static class ConfiguratorFunc
+    public class ConfiguratorFunc
     {
-        [FunctionName("Configurator")]
-        public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
-            ILogger log)
+        private readonly ILogger<ConfiguratorFunc> _logger;
+
+        public ConfiguratorFunc(ILogger<ConfiguratorFunc> logger)
+        {
+            _logger = logger;
+        }
+
+        [Function("Configurator")]
+        public IActionResult Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
             try
             {

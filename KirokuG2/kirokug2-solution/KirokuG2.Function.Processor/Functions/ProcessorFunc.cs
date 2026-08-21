@@ -1,16 +1,23 @@
 namespace KirokuG2.Processor.Functions
 {
 	using KirokuG2.Loader;
-	using Microsoft.Azure.WebJobs;
+	using Microsoft.Azure.Functions.Worker;
 	using Microsoft.Extensions.Logging;
 	using System;
 
 	public class ProcessorFunc
 	{
-		[FunctionName("Kiroku-Processor")]
-		public void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext executionContext)
+		private readonly ILogger<ProcessorFunc> logger;
+
+		public ProcessorFunc(ILogger<ProcessorFunc> logger)
 		{
-			using (var klog = KManager.NewInstance(executionContext.FunctionName))
+			this.logger = logger;
+		}
+
+		[Function("Kiroku-Processor")]
+		public void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, FunctionContext functionContext)
+		{
+			using (var klog = KManager.NewInstance(functionContext.FunctionDefinition.Name))
 			{
 				try
 				{
