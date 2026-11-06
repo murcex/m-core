@@ -2,16 +2,16 @@ using Configurator;
 using Configurator.Audit.Default.Core;
 using Microsoft.Extensions.Hosting;
 
-const string configPath = @"D:\home\data\app\cfg\Config.ini";
+const string configPath = @"C:\home\data\app\cfg\Config.ini";
 
 if (File.Exists(configPath))
 {
     File.Delete(configPath);
 }
 
-if (Directory.Exists(@"D:\home\data\app"))
+if (Directory.Exists(@"C:\home\data\app"))
 {
-    Directory.Delete(@"D:\home\data\app", true);
+    Directory.Delete(@"C:\home\data\app", true);
 }
 
 var config = ConfiguratorManager.Execute();

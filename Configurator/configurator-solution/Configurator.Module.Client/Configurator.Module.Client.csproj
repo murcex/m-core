@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <PackageId>Murcex.Configurator</PackageId>
     <Description>Azure Function Configuration Utility Client</Description>
     <Company>Murcex</Company>
@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Murcex.Implements.Configuration" Version="1.0.1" />
-    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+    <PackageReference Include="System.Text.Json" Version="10.0.11" />
   </ItemGroup>
 
 </Project>
