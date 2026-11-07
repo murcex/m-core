@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Version>0.0.8</Version>
@@ -13,10 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.12" />
-    <PackageReference Include="Murcex.Implements.DataTools" Version="0.0.2" />
-    <PackageReference Include="Murcex.KirokuG2" Version="1.0.1" />
-    <PackageReference Include="Murcex.PlyQor.Client" Version="1.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.13" />
+    <ProjectReference Include="$(MCoreRoot)Implements\implements-telluride\Murcex.Implements.DataTools\Murcex.Implements.DataTools.csproj" />
+    <ProjectReference Include="$(MCoreRoot)KirokuG2\kirokug2-solution\KirokuG2.Module.Client\KirokuG2.Module.Client.csproj" />
+    <ProjectReference Include="$(MCoreRoot)PlyQor\plyqor-solution\PlyQor.Module.Client\PlyQor.Module.Client.csproj" />
   </ItemGroup>
 
 </Project>

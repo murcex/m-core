@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    
     <ApplicationIcon />
     <StartupObject />
     <Version>0.0.6</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Murcex.Implements.Configuration" Version="1.0.1" />
-    <PackageReference Include="Murcex.KirokuG2" Version="1.0.1" />
-    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.30.1" />
+    <ProjectReference Include="$(MCoreRoot)Implements\implements-solution\Implements.Module.Configuration\Implements.Module.Configuration.csproj" />
+    <ProjectReference Include="$(MCoreRoot)KirokuG2\kirokug2-solution\KirokuG2.Module.Client\KirokuG2.Module.Client.csproj" />
   </ItemGroup>
 
 </Project>

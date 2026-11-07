@@ -1,25 +1,13 @@
-﻿namespace Configurator.Storage.Internal
+namespace Configurator.Storage.Internal
 {
-    using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Blob;
-    using System.IO;
+    using Azure.Storage.Blobs;
 
     class StorageClient
     {
         /// <summary>
-        /// Blob storage account.
-        /// </summary>
-        private static CloudStorageAccount _blobStorageAccount;
-
-        /// <summary>
-        /// Blob storage client.
-        /// </summary>
-        private static CloudBlobClient _blobClient;
-
-        /// <summary>
         /// Blob storage container.
         /// </summary>
-        private static CloudBlobContainer _blobContainer;
+        private static BlobContainerClient _blobContainer;
 
         /// <summary>
         /// Initilize storage blob client.
@@ -31,9 +19,7 @@
         {
             try
             {
-                _blobStorageAccount = CloudStorageAccount.Parse(storageAccount);
-                _blobClient = _blobStorageAccount.CreateCloudBlobClient();
-                _blobContainer = _blobClient.GetContainerReference(storageContainer);
+                _blobContainer = new BlobContainerClient(storageAccount, storageContainer);
 
                 return true;
             }
@@ -47,45 +33,16 @@
         /// Get a document from storage blob by file name.
         /// </summary>
         /// <param name="file"></param>
-        /// <returns></returns>
+        /// <returns>The blob content, or null if it does not exist or cannot be read.</returns>
         public static byte[] GetDocument(string file)
         {
-            byte[] document = null;
-
             try
             {
-                CloudBlockBlob blockBlob = _blobContainer.GetBlockBlobReference(file);
-                var task = blockBlob.ExistsAsync();
-                task.Wait();
-
-                if (task.Result)
-                {
-                    Stream stream = new MemoryStream();
-
-                    blockBlob.DownloadToStreamAsync(stream).Wait();
-
-                    byte[] buffer = new byte[16 * 1024];
-
-                    stream.Position = 0;
-
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        int read;
-                        while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            ms.Write(buffer, 0, read);
-                        }
-                        return ms.ToArray();
-                    }
-                }
-                else
-                {
-                    return document;
-                }
+                return _blobContainer.GetBlobClient(file).DownloadContent().Value.Content.ToArray();
             }
             catch
             {
-                return document;
+                return null;
             }
         }
     }

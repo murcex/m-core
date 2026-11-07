@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Murcex.KirokuG2" Version="1.0.1" />
+    <ProjectReference Include="$(MCoreRoot)KirokuG2\kirokug2-solution\KirokuG2.Module.Client\KirokuG2.Module.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

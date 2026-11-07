@@ -2,15 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    
     <ApplicationIcon />
     <StartupObject />
     <Version>0.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.2" />
-    <PackageReference Include="Murcex.KirokuG2" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.1" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
+    <ProjectReference Include="$(MCoreRoot)KirokuG2\kirokug2-solution\KirokuG2.Module.Client\KirokuG2.Module.Client.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,14 +2,15 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.2" />
-    <PackageReference Include="Murcex.PlyQor.Client" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.1" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
+    <ProjectReference Include="$(MCoreRoot)PlyQor\plyqor-solution\PlyQor.Module.Client\PlyQor.Module.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>
