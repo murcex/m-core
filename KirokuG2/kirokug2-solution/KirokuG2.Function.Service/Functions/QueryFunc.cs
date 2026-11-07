@@ -3,18 +3,24 @@ namespace KirokuG2.Service.Functions
 	using KirokuG2.Service.Core;
 	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.Azure.WebJobs;
-	using Microsoft.Azure.WebJobs.Extensions.Http;
+	using Microsoft.Azure.Functions.Worker;
 	using Microsoft.Extensions.Logging;
 	using PlyQor.Client;
 	using System.Threading.Tasks;
 
-	public static class QueryFunc
+	public class QueryFunc
 	{
-		[FunctionName("Query")]
-		public static async Task<IActionResult> Run(
+		private readonly ILogger<QueryFunc> logger;
+
+		public QueryFunc(ILogger<QueryFunc> logger)
+		{
+			this.logger = logger;
+		}
+
+		[Function("Query")]
+		public async Task<IActionResult> Run(
 			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-			ILogger log)
+			FunctionContext functionContext)
 		{
 			string token = req.Query["token"];
 			string id = req.Query["id"];

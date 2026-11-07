@@ -1,20 +1,26 @@
 using KirokuG2;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Murcex.PlyQor.Internal.Portal;
 using System;
 
 namespace Murcex.PlyQor.Function.Portal.Functions
 {
-	public static class PortalFunc
+	public class PortalFunc
 	{
-		[FunctionName("Portal")]
-		public static IActionResult Run(
+		private readonly ILogger<PortalFunc> logger;
+
+		public PortalFunc(ILogger<PortalFunc> logger)
+		{
+			this.logger = logger;
+		}
+
+		[Function("Portal")]
+		public IActionResult Run(
 			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-		ILogger log)
+			FunctionContext context)
 		{
 			using (var klog = KManager.NewInstance("PlyQor-Portal"))
 			{

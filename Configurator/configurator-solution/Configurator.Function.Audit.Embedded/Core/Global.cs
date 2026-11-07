@@ -2,6 +2,6 @@
 {
     public class Global
     {
-        public static string TestValue { get; set; }
+        public static string TestValue { get; set; } = string.Empty;
     }
 }

@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Murcex.Implements.DataTools" Version="0.0.1" />
-    <PackageReference Include="Murcex.KirokuG2" Version="1.0.0" />
-    <PackageReference Include="Murcex.PlyQor.Client" Version="1.0.0" />
-    <PackageReference Include="Murcex.Vyudro.Client" Version="0.0.7" />
+    <ProjectReference Include="$(MCoreRoot)Implements\implements-telluride\Murcex.Implements.DataTools\Murcex.Implements.DataTools.csproj" />
+    <ProjectReference Include="$(MCoreRoot)KirokuG2\kirokug2-solution\KirokuG2.Module.Client\KirokuG2.Module.Client.csproj" />
+    <ProjectReference Include="$(MCoreRoot)PlyQor\plyqor-solution\PlyQor.Module.Client\PlyQor.Module.Client.csproj" />
+    <ProjectReference Include="$(MCoreRoot)Vyudro\vyudro-solution\Murcex.Vyudro.Module.Client\Murcex.Vyudro.Module.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

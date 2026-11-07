@@ -1,20 +1,26 @@
 using KirokuG2.Internal.Portal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
 namespace KirokuG2.Function.Portal.Functions
 {
-	public static class PortalFunc
+	public class PortalFunc
 	{
-		[FunctionName("Portal")]
-		public static async Task<IActionResult> Run(
+		private readonly ILogger<PortalFunc> logger;
+
+		public PortalFunc(ILogger<PortalFunc> logger)
+		{
+			this.logger = logger;
+		}
+
+		[Function("Portal")]
+		public async Task<IActionResult> Run(
 			[HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-			ILogger log)
+			FunctionContext functionContext)
 		{
 			using (var klog = KManager.NewInstance("Kiroku-Portal"))
 			{

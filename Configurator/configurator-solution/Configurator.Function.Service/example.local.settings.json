@@ -2,7 +2,7 @@
   "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
     "WEBSITE_SITE_NAME": "dev-configurator-storage",
     "PYLON_CFG": "{\"embedded\": {\"STORAGE_ACCOUNT\": \"<access_key>\", \"STORAGE_CONTAINER\": \"<container>\"}}",
     "KIROKU_CFG": "<uri>,<key>"
