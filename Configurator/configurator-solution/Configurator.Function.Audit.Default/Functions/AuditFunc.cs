@@ -1,21 +1,26 @@
 using Configurator.Audit.Default.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using System;
 
 namespace Configurator.Audit.Default.Functions
 {
-    public static class AuditFunc
+    public class AuditFunc
     {
-        [FunctionName("Audit")]
-        public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            ILogger log)
+        private readonly ILogger<AuditFunc> _logger;
+
+        public AuditFunc(ILogger<AuditFunc> logger)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            _logger = logger;
+        }
+
+        [Function("Audit")]
+        public IActionResult Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req)
+        {
+            _logger.LogInformation("C# HTTP trigger function processed a request.");
 
             string responseMessage = $"Test Result: {string.Equals(Global.TestValue, "TestValue", StringComparison.OrdinalIgnoreCase)}, Config Result: {Global.ConfigExists}";
 

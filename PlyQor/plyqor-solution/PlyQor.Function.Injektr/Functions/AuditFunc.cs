@@ -1,7 +1,7 @@
 namespace PlyQor.Injektr.Functions
 {
     using KirokuG2;
-    using Microsoft.Azure.WebJobs;
+    using Microsoft.Azure.Functions.Worker;
     using Microsoft.Extensions.Logging;
     using PlyQor.Client;
     using PlyQor.Injektr.Core;
@@ -10,10 +10,10 @@ namespace PlyQor.Injektr.Functions
 
     public class AuditFunc
     {
-        [FunctionName("PlyQor-Audit")]
-        public void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext executionContext)
+        [Function("PlyQor-Audit")]
+        public void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, FunctionContext functionContext)
         {
-            using (var klog = KManager.NewInstance(executionContext.FunctionName))
+            using (var klog = KManager.NewInstance(functionContext.FunctionDefinition.Name))
             {
                 try
                 {
